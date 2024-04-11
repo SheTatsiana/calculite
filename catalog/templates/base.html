@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+
+<!-- шаблон для всех страниц приложения -->
+
+
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load static%}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            background-color: #f0f0f0; /* Цвет фона страницы */
+            color: #333; /* Основной цвет текста */
+            font-family: Arial, sans-serif; /* Шрифт */
+        }
+
+        header, footer {
+            background-color: #000; /* Цвет шапки и подвала */
+            color: #fff; /* Цвет текста в шапке и подвале */
+            padding: 10px; /* Внутренний отступ */
+        }
+
+        table {
+            width: 80%; /* Ширина таблицы */
+            margin: 20px auto; /* Центрирование таблицы */
+            border-collapse: collapse; /* Схлопывание границ ячеек */
+        }
+
+        th, td {
+            border: 1px solid #ddd; /* Границы ячеек */
+            padding: 8px; /* Внутренний отступ ячеек */
+            text-align: left; /* Выравнивание текста */
+        }
+
+        th {
+            background-color: #f2f2f2; /* Цвет фона заголовков */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}"><span style="font-size: 200%;" margin="top">&#8962;</span></a>
+        <a href="{% url 'add_new' %}">Новый объект</a>
+        <a href="{% url 'my_object' %}">Все объекты</a>
+        <a href="{% url 'catalog' %}">Каталог</a>
+        <a href="{% url 'profile' %}">Кабинет</a>
+
+    </nav>
+    <div class="content">
+
+        <div style="display: flex;">
+            <img src="{% static 'media/logo.png' %}" alt="Логотип" width="100" height="100">
+            <p style="margin-left: 10px;">Visatos Platuma / Calculite</p>
+        </div>
+
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>Следите за нами в соцсетях:</p>
+        <a href="https://www.facebook.com/visatosplatumapro">Facebook</a>
+        <a href="https://www.linkedin.com/company/visatosplatuma/">LinkedIN</a>
+        <a href="#">Instagram</a>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+
+</html>
