@@ -1,6 +1,10 @@
 ﻿# views.py
 from django.shortcuts import render, redirect
 from .models import Object
+from django.shortcuts import render, redirect
+from django.utils import timezone
+from datetime import date, timedelta
+from .models import MyObject, MyCurrentObject
 from .models import Product # модель прайса
 from .models import Note  # модель записок
 from django.views.generic import ListView, DetailView # подключаем модель для каталога
@@ -19,8 +23,15 @@ def add_item(request):
     return render(request, 'add_item.html', {'objects': objects})
 
 def add_new(request):
+    if request.method == 'POST':
+        form = MyObjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('add_new')  # Перенаправление на эту же страницу после успешного сохранения объекта
+    else:
+        form = MyObjectForm()
     objects = Object.objects.all()
-    return render(request, 'add_new.html', {'objects': objects})
+    return render(request, 'add_new.html', {'form': form, 'objects': objects})
 
 
 def catalog(request):

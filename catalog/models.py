@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib import admin
 from datetime import date
+from django.utils import timezone
 
 
 # модель для добавления 
@@ -33,12 +34,13 @@ class Product(models.Model):
 
 # добавляем модель для добавления объекта
 class MyObject(models.Model):
-    address = models.CharField(max_length=255)
-    start_date = models.DateField()
-    end_date = models.DateField()
-    customer_name = models.CharField(max_length=255)
-    executor_name = models.CharField(max_length=255)
-    documents = models.FileField(upload_to='documents/')
+    address = models.CharField(max_length=255, default='Vilnius')
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(default=timezone.now)
+    customer_name = models.CharField(max_length=255, default='Name')
+    executor_name = models.CharField(max_length=255, default='Valery')
+    documents = models.FileField(upload_to='documents/', default='documents/Договор_Visatos_Platuma_Valery.pdf')
+
  
     @classmethod
     def get_objects(cls):
@@ -47,17 +49,11 @@ class MyObject(models.Model):
 
 # модель для списка текущих объектов
 class MyCurrentObject(models.Model):
-    
-    # end_date = models.DateField()
-
-    #@classmethod
-   # def get_objects(cls):
-   #     return cls.objects.filter(end_date__gt=date.today())
-
-    
-    MyObject = models.ForeignKey(MyObject, on_delete=models.CASCADE)
-    MyObject = models.CharField(max_length=100, default='none')
+    my_object = models.ForeignKey(MyObject, on_delete=models.CASCADE)
+    my_object_name = models.CharField(max_length=100, default='none')
 
     @classmethod
     def get_objects(cls):
-        return cls.objects.filter(MyObject__end_date__gt=date.today())
+        return cls.objects.filter(my_object__end_date__gt=date.today())
+
+
