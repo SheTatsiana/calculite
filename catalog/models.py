@@ -40,6 +40,13 @@ class MyObject(models.Model):
     customer_name = models.CharField(max_length=255, default='Name')
     executor_name = models.CharField(max_length=255, default='Valery')
     documents = models.FileField(upload_to='documents/', default='documents/Договор_Visatos_Platuma_Valery.pdf')
+    name = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        if self.name:
+            return self.name
+        return self.address
+
 
  
     @classmethod
@@ -56,4 +63,7 @@ class MyCurrentObject(models.Model):
     def get_objects(cls):
         return cls.objects.filter(my_object__end_date__gt=date.today())
 
+    
+    def __str__(self):
+        return str(self.my_object)
 

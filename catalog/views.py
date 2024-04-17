@@ -1,13 +1,14 @@
 ﻿# views.py
 from django.shortcuts import render, redirect
 from .models import Object
-from django.shortcuts import render, redirect
 from django.utils import timezone
 from datetime import date, timedelta
 from .models import MyObject, MyCurrentObject
 from .models import Product # модель прайса
 from .models import Note  # модель записок
 from django.views.generic import ListView, DetailView # подключаем модель для каталога
+from django.db import models
+
 
 from .models import MyObject
 from .forms import MyObjectForm
