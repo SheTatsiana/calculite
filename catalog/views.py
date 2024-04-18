@@ -8,6 +8,8 @@ from .models import Product # модель прайса
 from .models import Note  # модель записок
 from django.views.generic import ListView, DetailView # подключаем модель для каталога
 from django.db import models
+from .models import WorkDetail
+from django.shortcuts import get_object_or_404
 
 
 from .models import MyObject
@@ -94,6 +96,20 @@ def mycurrentobject(request):
     objects = MyCurrentObject.get_objects()
     return render(request, 'mycurrentobject.html', {'objects': objects})
 
+
+def my_current_object_detail(request, object_id):
+    object_instance = get_object_or_404(MyCurrentObject, id=object_id)
+    works = object_instance.work_details.all()
+    total_price = object_instance.total_works_price()
+    
+    context = {
+        'object_instance': object_instance,
+        'works': works,
+        'total_price': total_price,
+    }
+    
+    return render(request, 'mycurrentobjectdetail.html', context)
+   
 
 
 

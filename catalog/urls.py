@@ -1,19 +1,13 @@
 ﻿# urls.py
-from django.urls import path, re_path
-from .views import home
-from .views import add_item
-from .views import add_new
-from .views import create_note
-from .views import catalog
-from .views import my_object
-from .views import profile
-from .views import ProductListView, ProductDetailView
+
+from django.urls import path
 from . import views
-from .views import create_object
-from .views import MyCurrentObject
+from .views import (
+    home, add_item, add_new, create_note, catalog, my_object, profile,
+    ProductListView, ProductDetailView, create_object, my_current_object_detail
+)
 
 urlpatterns = [
-  
     path('home', home, name='home'),
     path('add_item', add_item, name='add_item'),
     path('add_new', add_new, name='add_new'),
@@ -29,7 +23,10 @@ urlpatterns = [
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
     
     path('create/', create_object, name='create_object'),
-    path('MyCurrentObject', MyCurrentObject, name='MyCurrentObject'),
+    
+    path('mycurrentobject/', views.mycurrentobject, name='mycurrentobject'),
 
-   ]
+    # Детали текущего объекта
+    path('mycurrentobject/<int:object_id>/', views.my_current_object_detail, name='my_current_object_detail'),
 
+]

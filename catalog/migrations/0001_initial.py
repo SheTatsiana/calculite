@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         ('customer_name', models.CharField(default='Name', max_length=255)),
         ('executor_name', models.CharField(default='Valery', max_length=255)),
         ('documents', models.FileField(default='documents/Договор_Visatos_Platuma_Valery.pdf', upload_to='documents/')),
-        ('name', models.CharField(blank=True, max_length=255, null=True)),  # Добавьте это определение поля
+        ('name', models.CharField(blank=True, max_length=255, null=True)),  
     ],
 ),
         migrations.CreateModel(
