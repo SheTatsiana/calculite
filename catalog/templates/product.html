@@ -1,0 +1,35 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Текущий объект{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<h1>Текущий объект</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <input type="submit" value="Сохранить">
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Адрес</th>
+            <th>Общая сумма</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in objects %}
+        <tr>
+            <td>{{ obj.my_object }}</td>
+            <td>{{ obj.total_amount }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

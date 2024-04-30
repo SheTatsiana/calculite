@@ -2,31 +2,30 @@
 
 from django.urls import path
 from . import views
-from .views import (
-    home, add_item, add_new, create_note, catalog, my_object, profile,
-    ProductListView, ProductDetailView, create_object, my_current_object_detail
-)
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('home', home, name='home'),
-    path('add_item', add_item, name='add_item'),
-    path('add_new', add_new, name='add_new'),
-    path('catalog', catalog, name='catalog'),
-    path('my_object', my_object, name='my_object'),
-    path('profile', profile, name='profile'),
-    
-    # создания заметки
-    path('note', create_note, name='create_note'),
-
-    # создание прайса
-    path('products/', ProductListView.as_view(), name='product-list'),
-    path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
-    
-    path('create/', create_object, name='create_object'),
-    
+    path('', views.home, name='home'),
+    path('home', views.home, name='home'),
     path('mycurrentobject/', views.mycurrentobject, name='mycurrentobject'),
+    path('my_object', views.my_object, name='my_object'),
+    path('note', views.note, name='note'),
+    path('product', views.product, name='product'),
+    path('workdetail', views.workdetail, name='workdetail'),
+    path('profile', views.profile, name='profile'),
 
-    # Детали текущего объекта
-    path('mycurrentobject/<int:object_id>/', views.my_current_object_detail, name='my_current_object_detail'),
+    path('add_mco', views.add_mco, name='add_mco'),
+    path('add_mo', views.add_mo, name='add_mo'),
+    path('add_note', views.add_note, name='add_note'),
+    path('add_product', views.add_product, name='add_product'),
+    path('add_wd', views.add_wd, name='add_wd'),
+    path('add_profile', views.add_profile, name='add_profile'),
 
-]
+    path('edit_mco', views.edit_mco, name='edit_mco'),
+    path('edit_mo', views.edit_mo, name='edit_mo'),
+    path('edit_note', views.edit_note, name='edit_note'),
+    path('edit_product', views.edit_product, name='edit_product'),
+    path('edit_wd', views.edit_wd, name='edit_wd'),
+    path('edit_profile', views.edit_profile, name='edit_profile'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
