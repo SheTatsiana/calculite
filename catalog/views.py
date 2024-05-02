@@ -1,14 +1,9 @@
-﻿# views.py
+﻿from django.shortcuts import render, redirect, get_object_or_404
+from .models import MyCurrentObject, MyObject, Note, Product, WorkDetail
+from .forms import MyCurrentObjectForm
+from django.urls import reverse
 
-from django.shortcuts import render, redirect
-from .models import Object
-from django.utils import timezone
-from datetime import date, timedelta
-from django.views.generic import ListView, DetailView
-from django.db import models
-from django.shortcuts import get_object_or_404
-from .forms import MyObjectForm
-from .models import MyCurrentObject, MyObject, Note, Product, WorkDetail, Profile
+#url = reverse('users:profile_edit')
 
 def home(request):
     my_current_objects = MyCurrentObject.objects.all()
@@ -21,6 +16,10 @@ def mycurrentobject(request):
 def my_view(request):
     current_objects = MyCurrentObject.get_objects()
     return render(request, 'mycurrentobject.html', {'current_objects': current_objects})
+
+def my_object_view(request):
+    objects = MyObject.objects.all()  # Получаем все объекты
+    return render(request, 'my_object.html', {'objects': objects})
 
 def my_object(request):
     my_objects = MyObject.objects.all()
@@ -38,17 +37,16 @@ def workdetail(request):
     work_details = WorkDetail.objects.all()
     return render(request, 'workdetail.html', {'work_details': work_details})
 
-def profile(request):
-    profiles = Profile.objects.all()
-    return render(request, 'profile.html', {'profiles': profiles})
 
 def add_mco(request):
     if request.method == 'POST':
-        # Обработка отправленной формы и перенаправление на mycurrentobject
-        return redirect('mycurrentobject', permanent=True)
+        form = MyCurrentObjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('mycurrentobject')
     else:
-        # Отображение формы для добавления MyCurrentObject
-        return render(request, 'add_mco.html')
+        form = MyCurrentObjectForm()
+    return render(request, 'add_mco.html', {'form': form})
 
 def add_mo(request):
     if request.method == 'POST':
@@ -74,44 +72,37 @@ def add_wd(request):
     else:
         return render(request, 'add_wd.html')
 
-def add_profile(request):
+def edit_mco(request, pk):
+    my_current_object = get_object_or_404(MyCurrentObject, pk=pk)
     if request.method == 'POST':
-        return redirect('profile')
+        form = MyCurrentObjectForm(request.POST, instance=my_current_object)
+        if form.is_valid():
+            form.save()
+            return redirect('mycurrentobject')
     else:
-        return render(request, 'add_profile.html')
+        form = MyCurrentObjectForm(instance=my_current_object)
+    return render(request, 'edit_mco.html', {'form': form})
 
-def edit_mco(request):
-    if request.method == 'POST':
-        return redirect('mycurrentobject', permanent=True)
-    else:
-        return render(request, 'edit_mco.html')
-
-def edit_mo(request):
+def edit_mo(request, pk):  
     if request.method == 'POST':
         return redirect('my_object')
     else:
         return render(request, 'edit_mo.html')
 
-def edit_note(request):
+def edit_note(request, pk):  
     if request.method == 'POST':
         return redirect('note')
     else:
         return render(request, 'edit_note.html')
 
-def edit_product(request):
+def edit_product(request, pk):  
     if request.method == 'POST':
         return redirect('product')
     else:
         return render(request, 'edit_product.html')
 
-def edit_wd(request):
+def edit_wd(request, pk):  
     if request.method == 'POST':
         return redirect('workdetail')
     else:
         return render(request, 'edit_wd.html')
-
-def edit_profile(request):
-    if request.method == 'POST':
-        return redirect('profile')
-    else:
-        return render(request, 'edit_profile.html')

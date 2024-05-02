@@ -1,5 +1,5 @@
 ﻿from django.contrib import admin
-from .models import Note, Product, MyObject, MyCurrentObject, WorkDetail, Profile
+from .models import Note, Product, MyObject, MyCurrentObject, WorkDetail
 from django.utils.html import format_html
 
 
@@ -68,6 +68,3 @@ class MyCurrentObjectAdmin(admin.ModelAdmin):
     end_date.short_description = 'Дата окончания'
 
 
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    pass

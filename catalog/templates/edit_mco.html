@@ -1,0 +1,35 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<body>
+    <h1>Текущий проект</h1>
+    <form action="{% url 'edit_mco' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="{{ my_current_object.address }}"><br><br>
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ my_current_object.start_date }}"><br><br>
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ my_current_object.end_date }}"><br><br>
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" id="customer_name" name="customer_name" value="{{ my_current_object.customer_name }}"><br><br>
+        <label for="executor_name">Executor Name:</label>
+        <input type="text" id="executor_name" name="executor_name" value="{{ my_current_object.executor_name }}"><br><br>
+        <label for="documents">Documents:</label>
+        <input type="file" id="documents" name="documents" value="{{ my_current_object.documents }}"><br><br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ my_current_object.name }}"><br><br>
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>
+
+{% endblock %}

@@ -13,19 +13,17 @@ urlpatterns = [
     path('note', views.note, name='note'),
     path('product', views.product, name='product'),
     path('workdetail', views.workdetail, name='workdetail'),
-    path('profile', views.profile, name='profile'),
-
+    
     path('add_mco', views.add_mco, name='add_mco'),
     path('add_mo', views.add_mo, name='add_mo'),
     path('add_note', views.add_note, name='add_note'),
     path('add_product', views.add_product, name='add_product'),
     path('add_wd', views.add_wd, name='add_wd'),
-    path('add_profile', views.add_profile, name='add_profile'),
-
-    path('edit_mco', views.edit_mco, name='edit_mco'),
-    path('edit_mo', views.edit_mo, name='edit_mo'),
-    path('edit_note', views.edit_note, name='edit_note'),
-    path('edit_product', views.edit_product, name='edit_product'),
-    path('edit_wd', views.edit_wd, name='edit_wd'),
-    path('edit_profile', views.edit_profile, name='edit_profile'),
+    
+    path('edit_mco/<int:pk>/', views.edit_mco, name='edit_mco'),
+    path('edit_mo/<int:pk>/', views.edit_mo, name='edit_mo'),
+    path('edit_note/<int:pk>/', views.edit_note, name='edit_note'),
+    path('edit_product/<int:pk>/', views.edit_product, name='edit_product'),
+    path('edit_wd/<int:pk>/', views.edit_wd, name='edit_wd'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

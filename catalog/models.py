@@ -116,10 +116,4 @@ class WorkDetail(models.Model):
         return f"{self.product.name} - {self.quantity} - {self.total_price}"
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    location = models.CharField(max_length=100, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
-  
-    def __str__(self):
-        return self.user.username
+

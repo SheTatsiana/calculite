@@ -1,45 +1,24 @@
 ﻿{% extends 'base.html' %}
-
-{% block title %}catalog{% endblock %}
 {% block content %}
-
 {% load static %}
 
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title></title>
-    <style>
-        body {
-            background-color: #f0f0f0; /* Цвет фона страницы */
-            color: #333; /* Основной цвет текста */
-            font-family: Arial, sans-serif; /* Шрифт */
-        }
-
-        header, footer {
-            background-color: #000; /* Цвет шапки и подвала */
-            color: #fff; /* Цвет текста в шапке и подвале */
-            padding: 10px; /* Внутренний отступ */
-        }
-
-        table {
-            width: 80%; /* Ширина таблицы */
-            margin: 20px auto; /* Центрирование таблицы */
-            border-collapse: collapse; /* Схлопывание границ ячеек */
-        }
-
-        th, td {
-            border: 1px solid #ddd; /* Границы ячеек */
-            padding: 8px; /* Внутренний отступ ячеек */
-            text-align: left; /* Выравнивание текста */
-        }
-
-        th {
-            background-color: #f2f2f2; /* Цвет фона заголовков */
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Objects</title>
 </head>
-
 <body>
-    <p>Все объекты</p>
+    <h1>My Objects</h1>
+    <ul>
+        {% for my_object in my_objects %}
+        <li><a href="{% url 'edit_mo' my_object.id %}">{{ my_object.name }}</a></li>
+        {% endfor %}
+    </ul>
 </body>
+</html>
+
 
 {% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'catalog.apps.CatalogConfig',
     'admin_interface',
     'colorfield',
+    'users', 
     ]
 
 MIDDLEWARE = [
@@ -132,3 +133,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 APPEND_SLASH = False
+
+THUMBNAIL_SIZE = 300

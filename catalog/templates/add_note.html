@@ -1,55 +1,24 @@
-﻿<!-- create_note.html -->
-{% extends 'base.html' %}
-
-{% block title %}Create a Note{% endblock %}
-
+﻿{% extends 'base.html' %}
 {% block content %}
-
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title></title>
-    <style>
-        body {
-            background-color: #f0f0f0; /* Цвет фона страницы */
-            color: #333; /* Основной цвет текста */
-            font-family: Arial, sans-serif; /* Шрифт */
-        }
-
-        header, footer {
-            background-color: #000; /* Цвет шапки и подвала */
-            color: #fff; /* Цвет текста в шапке и подвале */
-            padding: 10px; /* Внутренний отступ */
-        }
-
-        table {
-            width: 80%; /* Ширина таблицы */
-            margin: 20px auto; /* Центрирование таблицы */
-            border-collapse: collapse; /* Схлопывание границ ячеек */
-        }
-
-        th, td {
-            border: 1px solid #ddd; /* Границы ячеек */
-            padding: 8px; /* Внутренний отступ ячеек */
-            text-align: left; /* Выравнивание текста */
-        }
-
-        th {
-            background-color: #f2f2f2; /* Цвет фона заголовков */
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if note %}Edit Note{% else %}Add Note{% endif %}</title>
 </head>
 <body>
-    <h1>Добавить заметку</h1>
-
-    <form method="post" action="{% url 'create_note' %}">
+    <h1>{% if note %}Edit Note{% else %}Add Note{% endif %}</h1>
+    <form action="{% if note %}{% url 'edit_note' %}{% else %}{% url 'add_note' %}{% endif %}" method="post">
         {% csrf_token %}
         <label for="title">Title:</label>
-        <input type="text" name="title" required>
-        <br>
-        <label for="content">Content:</label>
-        <textarea name="content" required></textarea>
-        <br>
-        <button type="submit">Create Note</button>
+        <input type="text" id="title" name="title" value="{% if note %}{{ note.title }}{% endif %}"><br><br>
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="content">{% if note %}{{ note.content }}{% endif %}</textarea><br><br>
+        <input type="submit" value="Save">
     </form>
-
 </body>
+</html>
+
 {% endblock %}

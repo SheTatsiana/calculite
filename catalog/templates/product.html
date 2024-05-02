@@ -1,35 +1,24 @@
 ﻿{% extends 'base.html' %}
-
-{% block title %}Текущий объект{% endblock %}
-
 {% block content %}
 {% load static %}
 
-<h1>Текущий объект</h1>
 
-<form method="post">
-    {% csrf_token %}
-
-    {{ form.as_p }}
-
-    <input type="submit" value="Сохранить">
-</form>
-
-<table>
-    <thead>
-        <tr>
-            <th>Адрес</th>
-            <th>Общая сумма</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for obj in objects %}
-        <tr>
-            <td>{{ obj.my_object }}</td>
-            <td>{{ obj.total_amount }}</td>
-        </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+<body>
+    <h1>Products</h1>
+    <ul>
+        {% for product in products %}
+        <li>{{ product }}</li>
         {% endfor %}
-    </tbody>
+    </ul>
+</body>
+</html>
 </table>
 
 {% endblock %}

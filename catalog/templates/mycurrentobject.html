@@ -1,38 +1,24 @@
 ﻿{% extends 'base.html' %}
-
-{% block title %}Текущий объект{% endblock %}
-
 {% block content %}
 {% load static %}
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Текущие проекты</title>
+    <title>Current</title>
 </head>
 <body>
     <h1>Текущие проекты</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Адрес</th>
-                <th>Общая сумма</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for current_object in current_objects %}
-            <tr>
-                <td>{{ current_object.my_object.address }}</td>
-                <td>{{ current_object.total_amount }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+    <ul>
+        {% for my_current_object in my_current_objects %}
+        <li><a href="{% url 'edit_mco' my_current_object.id %}">{{ my_current_object.name }}</a></li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
+
 
 {% endblock %}

@@ -12,13 +12,18 @@
 <body>
     <h1>Текущие проекты</h1>
     <ul>
-        {% for obj in my_current_objects %}
-        <li>{{ obj }}</li>
-        
-        <!-- Добавьте другие поля объекта MyCurrentObject по необходимости -->
+        {% for my_current_object in my_current_objects %}
+        <li>
+            <a href="{% url 'edit_mco' pk=my_current_object.pk %}">{{ my_current_object.name }}</a>
+            {% for object in objects %}
+            <a href="{% url 'edit_mo' pk=object.pk %}">{{ object.name }}</a><br>
+            {% endfor %}
+
+        </li>
         {% endfor %}
     </ul>
 </body>
 </html>
+
 
 {% endblock %}
