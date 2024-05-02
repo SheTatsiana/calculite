@@ -1,3 +1,4 @@
+<!-- add_mo.html -->
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
@@ -7,18 +8,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if object %}Edit Object{% else %}Add Object{% endif %}</title>
+    <title>Add Object</title>
 </head>
 <body>
-    <h1>{% if object %}Edit Object{% else %}Add Object{% endif %}</h1>
-    <form action="{% if object %}{% url 'edit_mo' %}{% else %}{% url 'add_mo' %}{% endif %}" method="post">
+    <h1>Add Object</h1>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{% if object %}{{ object.name }}{% endif %}"><br><br>
-        <input type="submit" value="Save">
+        <label for="id_address">Address:</label>
+        <input type="text" name="address" id="id_address" required>
+        <br>
+        <label for="id_start_date">Start Date:</label>
+        <input type="date" name="start_date" id="id_start_date" required>
+        <br>
+        <label for="id_end_date">End Date:</label>
+        <input type="date" name="end_date" id="id_end_date" required>
+        <br>
+        <label for="id_customer_name">Customer Name:</label>
+        <input type="text" name="customer_name" id="id_customer_name" required>
+        <br>
+        <label for="id_executor_name">Executor Name:</label>
+        <input type="text" name="executor_name" id="id_executor_name" required>
+        <br>
+        <label for="id_documents">Documents:</label>
+        <input type="file" name="documents" id="id_documents" required>
+        <br>
+        <label for="id_name">Name:</label>
+        <input type="text" name="name" id="id_name">
+        <br>
+        <button type="submit">Save</button>
     </form>
 </body>
-</html>
 </html>
 
 {% endblock %}

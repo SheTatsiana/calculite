@@ -5,48 +5,14 @@ from datetime import date
 from django.utils import timezone
 from decimal import Decimal
 from django.contrib.auth.models import User
-
+import os
+from datetime import datetime
 
 # модель Объект 
 class Object(models.Model):
     name = models.CharField(max_length=200)
     dat_added = models.DateTimeField(auto_now_add=True)
     
-    def __str__(self):
-        return self.name
-    
-
-# модель Заметки
-class Note(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    date = models.DateField(default=date.today)  # Поле даты с сегодняшней датой по умолчанию
-
-    def __str__(self):
-        return f"{self.title} ({self.date.strftime('%Y-%m-%d')})"
-
-
-# модель Продукты
-import os
-from datetime import datetime
-
-def generate_filename(instance, filename):
-    _, ext = os.path.splitext(filename)
-    if instance.pk:
-        filename = f"{instance.pk}{ext}"  # Используем ID объекта в качестве имени файла
-    else:
-        # Если объект еще не сохранен в базе данных, используем текущую дату и время для генерации уникального имени файла
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        filename = f"{timestamp}{ext}"
-    return os.path.join("products", filename)
-
-class Product(models.Model):
-    name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
-
     def __str__(self):
         return self.name
 
@@ -96,7 +62,39 @@ class MyCurrentObject(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.total_amount = self.calculate_total_amount()
-        super().save(*args, **kwargs)
+        super().save(*args, **kwargs)    
+
+# модель Заметки
+class Note(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(default=date.today)  # Поле даты с сегодняшней датой по умолчанию
+
+    def __str__(self):
+        return f"{self.title} ({self.date.strftime('%Y-%m-%d')})"
+
+
+# модель Продукты
+
+def generate_filename(instance, filename):
+    _, ext = os.path.splitext(filename)
+    if instance.pk:
+        filename = f"{instance.pk}{ext}"  # Используем ID объекта в качестве имени файла
+    else:
+        # Если объект еще не сохранен в базе данных, используем текущую дату и время для генерации уникального имени файла
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        filename = f"{timestamp}{ext}"
+    return os.path.join("products", filename)
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 # модель рабочие детали (продукт + количество + цена + стоимость + фото)

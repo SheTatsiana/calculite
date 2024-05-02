@@ -1,4 +1,4 @@
-<!-- edit_mo.html -->
+<!-- delete_mo.html -->
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
@@ -8,14 +8,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Object</title>
+    <title>Delete Object</title>
 </head>
 <body>
-    <h1>Edit Object</h1>
+    <h1>Delete Object</h1>
+    <p>Are you sure you want to delete "{{ my_object.name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
+        <button type="submit">Yes, delete</button>
     </form>
 </body>
 </html>

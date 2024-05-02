@@ -4,9 +4,9 @@ from .models import MyObject, Note, Product, WorkDetail, MyCurrentObject
 
 
 class MyCurrentObjectForm(forms.ModelForm):
-       class Meta:
-           model = MyObject
-           fields = '__all__'        
+    class Meta:
+        model = MyCurrentObject
+        fields = '__all__'
 
 class MyObjectForm(forms.ModelForm):
     class Meta:
@@ -27,4 +27,6 @@ class WorkDetailForm(forms.ModelForm):
     class Meta:
         model = WorkDetail
         fields = ['product', 'quantity']
+
+
 

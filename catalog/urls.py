@@ -25,5 +25,7 @@ urlpatterns = [
     path('edit_note/<int:pk>/', views.edit_note, name='edit_note'),
     path('edit_product/<int:pk>/', views.edit_product, name='edit_product'),
     path('edit_wd/<int:pk>/', views.edit_wd, name='edit_wd'),
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('product/<int:pk>/delete/', views.delete_product, name='delete_product'),
+    path('my_object/<int:pk>/delete/', views.delete_mo, name='delete_mo'),
+       
+] + static(settings.DOCUMENTS_URL, document_root=settings.DOCUMENTS_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

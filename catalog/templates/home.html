@@ -10,20 +10,24 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Текущие проекты</h1>
+    <h1></h1>
     <ul>
-        {% for my_current_object in my_current_objects %}
         <li>
-            <a href="{% url 'edit_mco' pk=my_current_object.pk %}">{{ my_current_object.name }}</a>
-            {% for object in objects %}
-            <a href="{% url 'edit_mo' pk=object.pk %}">{{ object.name }}</a><br>
-            {% endfor %}
-
+            <a href="{% url 'mycurrentobject' %}"><strong>Текущие проекты:</strong></a>
+            <ul>
+                {% for my_current_object in my_current_objects %}
+                <li>
+                    <a href="{% url 'edit_mo' pk=my_current_object.pk %}">{{ my_current_object.my_object.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
         </li>
-        {% endfor %}
+        <li><a href="{% url 'my_object' %}">Все проекты</a></li>
+        <li><a href="{% url 'note' %}">Заметки</a></li>
+        <li><a href="{% url 'product' %}">Каталог</a></li>
+        
     </ul>
 </body>
 </html>
-
 
 {% endblock %}

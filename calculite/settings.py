@@ -135,3 +135,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 APPEND_SLASH = False
 
 THUMBNAIL_SIZE = 300
+
+
+# Новый URL и корневая директория для документов
+DOCUMENTS_URL = '/documents/'
+DOCUMENTS_ROOT = os.path.join(BASE_DIR, 'documents')

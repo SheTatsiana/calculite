@@ -2,6 +2,8 @@
 from .models import MyCurrentObject, MyObject, Note, Product, WorkDetail
 from .forms import MyCurrentObjectForm
 from django.urls import reverse
+from .forms import ProductForm
+from .forms import MyObjectForm
 
 #url = reverse('users:profile_edit')
 
@@ -50,9 +52,13 @@ def add_mco(request):
 
 def add_mo(request):
     if request.method == 'POST':
-        return redirect('my_object')
+        form = MyObjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('my_object')
     else:
-        return render(request, 'add_mo.html')
+        form = MyObjectForm()
+    return render(request, 'add_mo.html', {'form': form})
 
 def add_note(request):
     if request.method == 'POST':
@@ -62,9 +68,13 @@ def add_note(request):
 
 def add_product(request):
     if request.method == 'POST':
-        return redirect('product')
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product')  # Перенаправляем на страницу со списком продуктов
     else:
-        return render(request, 'add_product.html')
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})
 
 def add_wd(request):
     if request.method == 'POST':
@@ -83,11 +93,16 @@ def edit_mco(request, pk):
         form = MyCurrentObjectForm(instance=my_current_object)
     return render(request, 'edit_mco.html', {'form': form})
 
-def edit_mo(request, pk):  
+def edit_mo(request, pk):
+    my_object = get_object_or_404(MyObject, pk=pk)
     if request.method == 'POST':
-        return redirect('my_object')
+        form = MyObjectForm(request.POST, instance=my_object)
+        if form.is_valid():
+            form.save()
+            return redirect('my_object')
     else:
-        return render(request, 'edit_mo.html')
+        form = MyObjectForm(instance=my_object)
+    return render(request, 'edit_mo.html', {'form': form})
 
 def edit_note(request, pk):  
     if request.method == 'POST':
@@ -95,14 +110,39 @@ def edit_note(request, pk):
     else:
         return render(request, 'edit_note.html')
 
-def edit_product(request, pk):  
+def edit_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
-        return redirect('product')
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product')  # Перенаправляем на страницу со списком продуктов
     else:
-        return render(request, 'edit_product.html')
+        form = ProductForm(instance=product)
+    return render(request, 'edit_product.html', {'form': form, 'product': product})
 
 def edit_wd(request, pk):  
     if request.method == 'POST':
         return redirect('workdetail')
     else:
         return render(request, 'edit_wd.html')
+
+
+def delete_product(request, pk):
+    # Получаем объект продукта или возвращаем ошибку 404, если продукт не найден
+    product = get_object_or_404(Product, pk=pk)
+    
+    if request.method == 'POST':
+        # При получении POST-запроса удаляем продукт
+        product.delete()
+        # Перенаправляем пользователя на страницу со списком продуктов
+        return redirect('product')
+    # Возвращаем шаблон для подтверждения удаления продукта
+    return render(request, 'delete_product.html', {'product': product})
+
+def delete_mo(request, pk):
+    my_object = get_object_or_404(MyObject, pk=pk)
+    if request.method == 'POST':
+        my_object.delete()
+        return redirect('my_object')
+    return render(request, 'delete_mo.html', {'my_object': my_object})

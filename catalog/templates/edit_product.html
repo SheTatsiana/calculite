@@ -2,30 +2,25 @@
 {% block content %}
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if product %}Edit Product{% else %}Add Product{% endif %}</title>
+    <title>Edit Product</title>
 </head>
 <body>
-    <h1>{% if product %}Edit Product{% else %}Add Product{% endif %}</h1>
-    <form action="{% if product %}{% url 'edit_product' %}{% else %}{% url 'add_product' %}{% endif %}" method="post" enctype="multipart/form-data">
+    <h1>Edit Product</h1>
+    <form method="post">
         {% csrf_token %}
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{% if product %}{{ product.name }}{% endif %}"><br><br>
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price" value="{% if product %}{{ product.price }}{% endif %}"><br><br>
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description">{% if product %}{{ product.description }}{% endif %}</textarea><br><br>
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image"><br><br>
-        <input type="submit" value="Save">
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <form action="{% url 'delete_product' pk=product.pk %}" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
     </form>
 </body>
 </html>
-
 
 {% endblock %}

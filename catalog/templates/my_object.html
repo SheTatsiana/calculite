@@ -2,7 +2,6 @@
 {% block content %}
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +11,39 @@
 </head>
 <body>
     <h1>My Objects</h1>
-    <ul>
-        {% for my_object in my_objects %}
-        <li><a href="{% url 'edit_mo' my_object.id %}">{{ my_object.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Адресс</th>
+                <th>Начало работ</th>
+                <th>Окончание работ</th>
+                <th>Заказчик</th>
+                <th>Исполнитель</th>
+                <th>Документы</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for my_object in my_objects %}
+            <tr>
+                <td><a href="{% url 'edit_mo' my_object.id %}">{{ my_object.name }}</a></td>
+                <td>{{ my_object.address }}</td>
+                <td>{{ my_object.start_date }}</td>
+                <td>{{ my_object.end_date }}</td>
+                <td>{{ my_object.customer_name }}</td>
+                <td>{{ my_object.executor_name }}</td>
+                <td><a href="/{{ my_object.documents }}">{{ my_object.documents }}</a></td>
+                <td>
+                    <a href="{% url 'edit_mo' my_object.id %}">Edit</a> | <!-- Редактировать -->
+                    <a href="{% url 'delete_mo' my_object.id %}">Delete</a>  <!-- Удалить -->
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'add_mo' %}">Add New</a>  <!-- Добавить новый объект -->
 </body>
 </html>
-
 
 {% endblock %}
