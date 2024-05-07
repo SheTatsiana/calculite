@@ -1,0 +1,10 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<h1>Подтверждение удаления заметки</h1>
+<p>Вы уверены, что хотите удалить заметку "{{ note.title }}"?</p>
+<form action="{% url 'delete_note' note.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Удалить</button>
+    <a href="{% url 'note' %}">Отмена</a>
+</form>
+{% endblock %}

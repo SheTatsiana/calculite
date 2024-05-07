@@ -1,4 +1,4 @@
-from django import forms
+﻿from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
@@ -20,13 +20,33 @@ class NewUserForm(UserCreationForm):
         return user
 
 
+#class UserEditForm(forms.ModelForm):
+   # class Meta:
+        #model = User
+      #  fields = ('first_name', 'last_name', 'email')
+
+
 class UserEditForm(forms.ModelForm):
+    first_name = forms.CharField(label="Имя")
+    last_name = forms.CharField(label="Фамилия")
+    email = forms.EmailField(label="Электронная почта")
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
 
 
+
+#class ProfileEditForm(forms.ModelForm):
+    #class Meta:
+        #model = Profile
+        #fields = ('date_of_birth', 'photo')
+
+
 class ProfileEditForm(forms.ModelForm):
+    date_of_birth = forms.DateField(label="Дата рождения", help_text="Формат: ГГГГ-ММ-ДД")
+    photo = forms.ImageField(label="Фото")
+
     class Meta:
         model = Profile
         fields = ('date_of_birth', 'photo')

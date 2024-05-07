@@ -80,12 +80,14 @@ class Note(models.Model):
 def generate_filename(instance, filename):
     _, ext = os.path.splitext(filename)
     if instance.pk:
-        filename = f"{instance.pk}{ext}"  # Используем ID объекта в качестве имени файла
+        # Используем ID продукта и его название в качестве имени файла
+        filename = f"{instance.pk}_{instance.name.replace(' ', '_')}{ext}"
     else:
         # Если объект еще не сохранен в базе данных, используем текущую дату и время для генерации уникального имени файла
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         filename = f"{timestamp}{ext}"
-    return os.path.join("products", filename)
+    return os.path.join(filename)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)

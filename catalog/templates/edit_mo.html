@@ -1,4 +1,3 @@
-<!-- edit_mo.html -->
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
@@ -11,13 +10,14 @@
     <title>Edit Object</title>
 </head>
 <body>
-    <h1>Edit Object</h1>
+    <h1>"{{ object_name }}"</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <button type="submit">Сохранить</button>
     </form>
 </body>
 </html>
+
 
 {% endblock %}

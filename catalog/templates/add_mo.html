@@ -11,31 +11,31 @@
     <title>Add Object</title>
 </head>
 <body>
-    <h1>Add Object</h1>
+    <h1>Добавить проект</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="id_address">Address:</label>
+        <label for="id_address">Адрес:</label>
         <input type="text" name="address" id="id_address" required>
-        <br>
-        <label for="id_start_date">Start Date:</label>
+        <br><br>
+        <label for="id_start_date">Начало проекта:</label>
         <input type="date" name="start_date" id="id_start_date" required>
-        <br>
-        <label for="id_end_date">End Date:</label>
+        <br><br>
+        <label for="id_end_date">Окончание проекта:</label>
         <input type="date" name="end_date" id="id_end_date" required>
-        <br>
-        <label for="id_customer_name">Customer Name:</label>
+        <br><br>
+        <label for="id_customer_name">Заказчик:</label>
         <input type="text" name="customer_name" id="id_customer_name" required>
-        <br>
-        <label for="id_executor_name">Executor Name:</label>
+        <br><br>
+        <label for="id_executor_name">Исполнитель:</label>
         <input type="text" name="executor_name" id="id_executor_name" required>
-        <br>
-        <label for="id_documents">Documents:</label>
+        <br><br>
+        <label for="id_documents">Документы:</label>
         <input type="file" name="documents" id="id_documents" required>
-        <br>
-        <label for="id_name">Name:</label>
+        <br><br>
+        <label for="id_name">Название:</label>
         <input type="text" name="name" id="id_name">
-        <br>
-        <button type="submit">Save</button>
+        <br><br>
+        <button type="submit">Сохранить</button>
     </form>
 </body>
 </html>

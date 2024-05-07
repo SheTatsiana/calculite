@@ -3,28 +3,6 @@
 {% load static %}
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if work_detail %}Edit Work Detail{% else %}Add Work Detail{% endif %}</title>
-</head>
-<body>
-    <h1>{% if work_detail %}Edit Work Detail{% else %}Add Work Detail{% endif %}</h1>
-    <form action="{% if work_detail %}{% url 'edit_wd' %}{% else %}{% url 'add_wd' %}{% endif %}" method="post">
-        {% csrf_token %}
-        <label for="product">Product:</label>
-        <select id="product" name="product">
-            {% for product in products %}
-            <option value="{{ product.id }}">{{ product.name }}</option>
-            {% endfor %}
-        </select><br><br>
-        <label for="quantity">Quantity:</label>
-        <input type="text" id="quantity" name="quantity" value="{% if work_detail %}{{ work_detail.quantity }}{% endif %}"><br><br>
-        <input type="submit" value="Save">
-    </form>
-</body>
-</html>
+
 
 {% endblock %}

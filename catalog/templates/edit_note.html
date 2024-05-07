@@ -1,24 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if note %}Edit Note{% else %}Add Note{% endif %}</title>
-</head>
-<body>
-    <h1>{% if note %}Edit Note{% else %}Add Note{% endif %}</h1>
-    <form action="{% if note %}{% url 'edit_note' %}{% else %}{% url 'add_note' %}{% endif %}" method="post">
-        {% csrf_token %}
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" value="{% if note %}{{ note.title }}{% endif %}"><br><br>
-        <label for="content">Content:</label><br>
-        <textarea id="content" name="content">{% if note %}{{ note.content }}{% endif %}</textarea><br><br>
-        <input type="submit" value="Save">
-    </form>
-</body>
-</html>
-
+<h1>Редактировать заметку</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
 {% endblock %}

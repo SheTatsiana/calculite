@@ -4,6 +4,12 @@ from .forms import MyCurrentObjectForm
 from django.urls import reverse
 from .forms import ProductForm
 from .forms import MyObjectForm
+from .forms import NoteForm, WorkDetailForm
+
+from django.http import JsonResponse
+from .models import WorkDetail
+from django.views.decorators.csrf import csrf_exempt
+
 
 #url = reverse('users:profile_edit')
 
@@ -13,11 +19,12 @@ def home(request):
 
 def mycurrentobject(request):
     my_current_objects = MyCurrentObject.objects.all()
-    return render(request, 'mycurrentobject.html', {'my_current_objects': my_current_objects})
+    products = Product.objects.all()  # Получаем все продукты
+    return render(request, 'mycurrentobject.html', {'my_current_objects': my_current_objects, 'products': products})
 
-def my_view(request):
-    current_objects = MyCurrentObject.get_objects()
-    return render(request, 'mycurrentobject.html', {'current_objects': current_objects})
+#def my_view(request):
+    #current_objects = MyCurrentObject.get_objects()
+    #return render(request, 'mycurrentobject.html', {'current_objects': current_objects})
 
 def my_object_view(request):
     objects = MyObject.objects.all()  # Получаем все объекты
@@ -50,6 +57,8 @@ def add_mco(request):
         form = MyCurrentObjectForm()
     return render(request, 'add_mco.html', {'form': form})
 
+
+
 def add_mo(request):
     if request.method == 'POST':
         form = MyObjectForm(request.POST)
@@ -62,9 +71,13 @@ def add_mo(request):
 
 def add_note(request):
     if request.method == 'POST':
-        return redirect('note')
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('note')
     else:
-        return render(request, 'add_note.html')
+        form = NoteForm()
+    return render(request, 'add_note.html', {'form': form})
 
 def add_product(request):
     if request.method == 'POST':
@@ -76,11 +89,25 @@ def add_product(request):
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
 
+@csrf_exempt
 def add_wd(request):
     if request.method == 'POST':
-        return redirect('workdetail')
-    else:
-        return render(request, 'add_wd.html')
+        object_id = request.POST.get('object_id')
+        product_id = request.POST.get('product')
+        quantity = request.POST.get('quantity')
+
+        # Создаем новую рабочую деталь
+        work_detail = WorkDetail.objects.create(
+            my_current_object_id=object_id,
+            product_id=product_id,
+            quantity=quantity,
+        )
+
+        # Возвращаем успешный JSON-ответ
+        return JsonResponse({'success': True})
+
+    # Если запрос не POST, возвращаем ошибку
+    return JsonResponse({'error': 'Only POST requests are allowed'}, status=400)
 
 def edit_mco(request, pk):
     my_current_object = get_object_or_404(MyCurrentObject, pk=pk)
@@ -102,13 +129,22 @@ def edit_mo(request, pk):
             return redirect('my_object')
     else:
         form = MyObjectForm(instance=my_object)
-    return render(request, 'edit_mo.html', {'form': form})
+    
+    # Передаем название объекта в контекст шаблона
+    object_name = my_object.name
+    context = {'form': form, 'object_name': object_name}
+    return render(request, 'edit_mo.html', context)
 
-def edit_note(request, pk):  
+def edit_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
     if request.method == 'POST':
-        return redirect('note')
+        form = NoteForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            return redirect('note')
     else:
-        return render(request, 'edit_note.html')
+        form = NoteForm(instance=note)
+    return render(request, 'edit_note.html', {'form': form})
 
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -121,11 +157,17 @@ def edit_product(request, pk):
         form = ProductForm(instance=product)
     return render(request, 'edit_product.html', {'form': form, 'product': product})
 
-def edit_wd(request, pk):  
+def edit_wd(request, pk):
+    work_detail = get_object_or_404(WorkDetail, pk=pk)
     if request.method == 'POST':
-        return redirect('workdetail')
+        form = WorkDetailForm(request.POST, instance=work_detail)
+        if form.is_valid():
+            form.save()
+            return redirect('workdetail')  
     else:
-        return render(request, 'edit_wd.html')
+        form = WorkDetailForm(instance=work_detail)
+    return render(request, 'edit_wd.html', {'form': form, 'work_detail': work_detail})
+
 
 
 def delete_product(request, pk):
@@ -146,3 +188,19 @@ def delete_mo(request, pk):
         my_object.delete()
         return redirect('my_object')
     return render(request, 'delete_mo.html', {'my_object': my_object})
+
+
+def delete_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    if request.method == 'POST':
+        note.delete()
+        return redirect('note')
+    return render(request, 'delete_note.html', {'note': note})
+
+
+def delete_wd(request, work_detail_id):
+    work_detail = get_object_or_404(WorkDetail, pk=work_detail_id)
+    if request.method == 'POST':
+        work_detail.delete()
+        return redirect('workdetail')  # Redirect to the list view
+    return render(request, 'delete_wd.html', {'work_detail': work_detail})

@@ -10,12 +10,13 @@
     <title>Notes</title>
 </head>
 <body>
-    <h1>Notes</h1>
+    <h1>Заметки</h1>
     <ul>
         {% for note in notes %}
-        <li>{{ note }}</li>
+        <li><a href="{% url 'edit_note' note.pk %}">{{ note.title }}</a> (<a href="{% url 'delete_note' note.pk %}">Удалить</a>)</li>
         {% endfor %}
     </ul>
+    <a href="{% url 'add_note' %}">Добавить заметку</a>
 </body>
 </html>
 

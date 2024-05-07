@@ -10,7 +10,7 @@
     <title>My Objects</title>
 </head>
 <body>
-    <h1>My Objects</h1>
+    <h1>Мои проекты</h1>
     <table>
         <thead>
             <tr>
@@ -33,16 +33,15 @@
                 <td>{{ my_object.end_date }}</td>
                 <td>{{ my_object.customer_name }}</td>
                 <td>{{ my_object.executor_name }}</td>
-                <td><a href="/{{ my_object.documents }}">{{ my_object.documents }}</a></td>
+                <td>{{ my_object.documents }}</td>
                 <td>
-                    <a href="{% url 'edit_mo' my_object.id %}">Edit</a> | <!-- Редактировать -->
-                    <a href="{% url 'delete_mo' my_object.id %}">Delete</a>  <!-- Удалить -->
+                    <a href="{% url 'delete_mo' my_object.id %}">Удалить</a>  
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'add_mo' %}">Add New</a>  <!-- Добавить новый объект -->
+    <a href="{% url 'add_mo' %}">Добавить проект</a>  <!-- Добавить новый объект -->
 </body>
 </html>
 

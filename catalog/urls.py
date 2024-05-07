@@ -5,6 +5,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('home', views.home, name='home'),
@@ -25,7 +26,10 @@ urlpatterns = [
     path('edit_note/<int:pk>/', views.edit_note, name='edit_note'),
     path('edit_product/<int:pk>/', views.edit_product, name='edit_product'),
     path('edit_wd/<int:pk>/', views.edit_wd, name='edit_wd'),
+
     path('product/<int:pk>/delete/', views.delete_product, name='delete_product'),
     path('my_object/<int:pk>/delete/', views.delete_mo, name='delete_mo'),
-       
+    path('delete_note/<int:pk>/', views.delete_note, name='delete_note'),
+    path('delete_wd/<int:pk>/', views.delete_wd, name='delete_wd'),
+ 
 ] + static(settings.DOCUMENTS_URL, document_root=settings.DOCUMENTS_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

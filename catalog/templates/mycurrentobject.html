@@ -2,23 +2,52 @@
 {% block content %}
 {% load static %}
 
+<h1>Текущие проекты</h1>
+<table border="1">
+    <tr>
+        <th rowspan="2">Название объекта</th>
+        <th rowspan="2">Общая сумма</th>
+        <th colspan="4">Продукт</th>
+        <th rowspan="2">Добавить продукт</th>
+    </tr>
+    <tr>
+        <th>Продукт</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Стоимость</th>
+    </tr>
+    {% for my_current_object in my_current_objects %}
+    {% for work_detail in my_current_object.work_details.all %}
+    <tr>
+        {% if forloop.first %}
+        <td rowspan="{{ my_current_object.work_details.count }}">{{ my_current_object.my_object }}</td>
+        <td rowspan="{{ my_current_object.work_details.count }}">{{ my_current_object.total_amount }}</td>
+        {% endif %}
+        <td>{{ work_detail.product.name }}</td> <!-- Продукт -->
+        <td>{{ work_detail.unit_price }}</td> <!-- Цена -->
+        <td>{{ work_detail.quantity }}</td> <!-- Количество -->
+        <td>{{ work_detail.total_price }}</td> <!-- Стоимость -->
+        {% if forloop.first %}
+        <td rowspan="{{ my_current_object.work_details.count }}">
+            <!-- Добавить продукт -->
+            <form action="{% url 'add_wd' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ my_current_object.id }}">
+                <select name="product">
+                    {% for product in products %}
+                    <option value="{{ product.pk }}">{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="quantity" min="1" required>
+                <input type="submit" value="Сохранить">
+            </form>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    {% endfor %}
+</table>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current</title>
-</head>
-<body>
-    <h1>Текущие проекты</h1>
-    <ul>
-        {% for my_current_object in my_current_objects %}
-        <li><a href="{% url 'edit_mco' my_current_object.id %}">{{ my_current_object.name }}</a></li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
 
 
 {% endblock %}
