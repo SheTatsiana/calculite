@@ -17,7 +17,7 @@ class NoteAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'description', 'display_image')  # добавьте 'display_image' в список отображаемых полей
+    list_display = ('name', 'price', 'description', 'display_image')  
 
     def display_image(self, obj):
         if obj.image:
@@ -25,9 +25,9 @@ class ProductAdmin(admin.ModelAdmin):
         else:
             return 'No Image'
 
-    display_image.short_description = 'Image'  # задаем краткое описание для поля
+    display_image.short_description = 'Image'  
 
-    # добавьте это, чтобы миниатюра была кликабельной и открывала полное изображение
+    # чтобы миниатюра была кликабельной и открывала полное изображение
     def get_list_display(self, request):
         return ('name', 'price', 'description', 'display_image')
 

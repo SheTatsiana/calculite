@@ -20,7 +20,9 @@
     {% for work_detail in my_current_object.work_details.all %}
     <tr>
         {% if forloop.first %}
-        <td rowspan="{{ my_current_object.work_details.count }}">{{ my_current_object.my_object }}</td>
+        <td rowspan="{{ my_current_object.work_details.count }}">
+            <a href="{% url 'edit_mo' my_current_object.my_object.id %}">{{ my_current_object.my_object.name }}</a>
+        </td>
         <td rowspan="{{ my_current_object.work_details.count }}">{{ my_current_object.total_amount }}</td>
         {% endif %}
         <td>{{ work_detail.product.name }}</td> <!-- Продукт -->

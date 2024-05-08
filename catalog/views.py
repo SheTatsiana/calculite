@@ -47,7 +47,7 @@ def workdetail(request):
     return render(request, 'workdetail.html', {'work_details': work_details})
 
 
-def add_mco(request):
+def add_mco(request, object_id=None): 
     if request.method == 'POST':
         form = MyCurrentObjectForm(request.POST)
         if form.is_valid():
@@ -56,7 +56,6 @@ def add_mco(request):
     else:
         form = MyCurrentObjectForm()
     return render(request, 'add_mco.html', {'form': form})
-
 
 
 def add_mo(request):
@@ -204,3 +203,32 @@ def delete_wd(request, work_detail_id):
         work_detail.delete()
         return redirect('workdetail')  # Redirect to the list view
     return render(request, 'delete_wd.html', {'work_detail': work_detail})
+
+
+
+import openpyxl
+from django.http import HttpResponse
+
+def export_to_excel(request):
+    products = Product.objects.all()
+
+    # Создаем новый документ Excel
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Каталог"
+
+    # Заполняем заголовки столбцов
+    ws.append(["Наименование", "Цена", "Описание", "Фото"])
+
+    # Заполняем данные о продуктах
+    for product in products:
+        ws.append([product.name, product.price, product.description, product.image.url if product.image else ""])
+
+    # Создаем HTTP-ответ с содержимым файла Excel
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=catalog.xlsx'
+
+    # Сохраняем документ Excel в HTTP-ответ
+    wb.save(response)
+
+    return response

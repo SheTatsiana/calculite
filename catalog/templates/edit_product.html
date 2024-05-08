@@ -10,7 +10,7 @@
     <title>Edit Product</title>
 </head>
 <body>
-    <h3>Редактировать продукт</h3>
+    <h3>{{ product.name }}</h3>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

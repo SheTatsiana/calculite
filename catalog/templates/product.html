@@ -26,6 +26,9 @@
 </head>
 <body>
     <h1>Каталог</h1>
+
+    <a href="{% url 'add_product' %}">Добавить продукт</a>
+
     <table>
         <thead>
             <tr>
@@ -59,7 +62,8 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'add_product' %}">Добавить продукт</a>
+
+    <a href="{% url 'export_to_excel' %}" class="btn btn-primary">Скачать в Excel</a>
 </body>
 </html>
 {% endblock %}

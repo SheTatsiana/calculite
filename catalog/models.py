@@ -44,7 +44,7 @@ class MyCurrentObject(models.Model):
     
     @classmethod
     def get_objects(cls):
-        return cls.objects.filter(my_object__end_date__gt=date.today())
+        return cls.objects.filter(my_object__end_date__gte=date.today())  # Фильтруем по текущей дате
    
     
     def update_total_price(self):
