@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         body {
-            background-color: #f0f0f0; /* Цвет фона страницы */
+            background: linear-gradient(to bottom, rgb(134, 187, 150), rgb(255, 255, 255));  /* Цвет фона страницы */
             color: #333; /* Основной цвет текста */
             font-family: Arial, sans-serif; /* Шрифт */
         }
@@ -19,6 +19,21 @@
             background-color: #000; /* Цвет шапки и подвала */
             color: #fff; /* Цвет текста в шапке и подвале */
             padding: 10px; /* Внутренний отступ */
+
+        }
+
+        nav {
+            position: fixed;
+            width: calc(100% - 20px);
+            top: 0;
+            left: 10px;
+            padding-right: 10px;
+            background-color: #000;
+            z-index: 1000;
+        }
+        
+        .content {
+            margin-top: 50px; /* Замените 50px на высоту вашего меню, если она отличается */
         }
 
         table {
@@ -43,8 +58,9 @@
         <a href="{% url 'home' %}"><span style="font-size: 200%;" margin="top">&#8962;</span></a>
         <a href="{% url 'mycurrentobject' %}">Текущие проекты</a>
         <a href="{% url 'my_object' %}">Все проекты</a>
-        <a href="{% url 'note' %}">Заметки</a>
         <a href="{% url 'product' %}">Каталог</a>
+        <a href="{% url 'note' %}">Заметки</a>
+
         <a href="{% url 'workdetail' %}">Рабочие детали</a>
         <a href="{% url 'users:user_profile' %}">Профиль</a>
         <!---->
@@ -53,7 +69,7 @@
 
             <div style="display: flex;">
                 <img src="{% static 'media/logo.png' %}" alt="Логотип" width="100" height="100">
-                <p style="margin-left: 10px;">Visatos Platuma / Calculite</p>
+                <p style="margin-left: 10px;"><b>Visatos Platuma / Calculite</br> +370 644 464 63</b></p>
             </div>
 
         </div>

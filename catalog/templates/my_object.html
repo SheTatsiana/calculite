@@ -10,9 +10,12 @@
     <title>My Objects</title>
 </head>
 <body>
-    <h1>Мои проекты</h1>
+    <h1>Все проекты</h1>
 
-    <a href="{% url 'add_mo' %}">Добавить проект</a>  <!-- Добавить новый объект -->
+    <a href="{% url 'add_mo' %}">Добавить проект</a>  
+    </br></br>
+
+    <a href="{% url 'export_all_objects_to_excel' %}" class="btn btn-primary">Экспорт в Excel</a>
 
     <table>
         <thead>
@@ -45,7 +48,12 @@
         </tbody>
     </table>
 
+
+
+
 </body>
+
+
 </html>
 
 {% endblock %}

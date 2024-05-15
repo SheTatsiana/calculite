@@ -47,7 +47,7 @@ def workdetail(request):
     return render(request, 'workdetail.html', {'work_details': work_details})
 
 
-def add_mco(request, object_id=None): 
+def add_mco(request): 
     if request.method == 'POST':
         form = MyCurrentObjectForm(request.POST)
         if form.is_valid():
@@ -232,3 +232,77 @@ def export_to_excel(request):
     wb.save(response)
 
     return response
+
+
+
+def export_current_objects_to_excel(request):
+    my_current_objects = MyCurrentObject.objects.all()
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Текущие проекты"
+
+    ws.append(["Название", "Адрес", "Начало работ", "Окончание работ", "Заказчик", "Исполнитель"])
+
+    for my_current_object in my_current_objects:
+        ws.append([
+            my_current_object.my_object.name,
+            my_current_object.my_object.address,
+            my_current_object.my_object.start_date,
+            my_current_object.my_object.end_date,
+            my_current_object.my_object.customer_name,
+            my_current_object.my_object.executor_name
+        ])
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=current_objects.xlsx'
+
+    wb.save(response)
+
+    return response
+
+
+
+def export_all_objects_to_excel(request):
+    my_objects = MyObject.objects.all()
+
+    # Создаем новый документ Excel
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Все проекты"
+
+    # Заполняем заголовки столбцов
+    ws.append(["Название", "Адрес", "Начало работ", "Окончание работ", "Заказчик", "Исполнитель"])
+
+    # Заполняем данные о объектах
+    for my_object in my_objects:
+        ws.append([
+            my_object.name,
+            my_object.address,
+            my_object.start_date,
+            my_object.end_date,
+            my_object.customer_name,
+            my_object.executor_name
+        ])
+
+    # Создаем HTTP-ответ с содержимым файла Excel
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=all_objects.xlsx'
+
+    # Сохраняем документ Excel в HTTP-ответ
+    wb.save(response)
+
+    return response
+
+
+def mycurrentobject(request):
+    my_current_objects = MyCurrentObject.objects.all()
+    return render(request, 'mycurrentobject.html', {'my_objects': my_current_objects})
+
+
+def delete_mco(request, pk):
+    my_current_object = get_object_or_404(MyCurrentObject, pk=pk)
+    if request.method == 'POST':
+        my_current_object.delete()  
+        return redirect('mycurrentobject')
+    return render(request, 'delete_mco.html', {'my_current_object': my_current_object})

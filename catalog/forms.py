@@ -6,12 +6,14 @@ from .models import MyObject, Note, Product, WorkDetail, MyCurrentObject
 class MyCurrentObjectForm(forms.ModelForm):
     class Meta:
         model = MyCurrentObject
-        fields = '__all__'
+        fields = ['my_object']
 
 class MyObjectForm(forms.ModelForm):
+    products = forms.ModelMultipleChoiceField(queryset=Product.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = MyObject
-        fields = ['name', 'address', 'start_date', 'end_date', 'customer_name', 'executor_name', 'documents']
+        fields = ['name', 'address', 'start_date', 'end_date', 'customer_name', 'executor_name', 'documents', 'products']
         labels = {
             'name': 'Название',
             'address': 'Адрес',
@@ -20,12 +22,27 @@ class MyObjectForm(forms.ModelForm):
             'customer_name': 'Заказчик',
             'executor_name': 'Исполнитель',
             'documents': 'Документы',
+            'products': 'Продукты',
+            'Currently': 'Редактировать'
         }
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if commit:
+            instance.save()
+            self.save_m2m()  # сохраняем связанные продукты
+        return instance
 
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'date']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}) 
+        }
+
+  
+
 
 class ProductForm(forms.ModelForm):
     class Meta:

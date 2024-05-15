@@ -17,7 +17,7 @@ urlpatterns = [
     path('product', views.product, name='product'),
     path('workdetail', views.workdetail, name='workdetail'),
     
-    path('add-mco/<int:object_id>/', add_mco, name='add_mco'),
+    path('add-mco', add_mco, name='add_mco'),
 
     path('add_mo', views.add_mo, name='add_mo'),
     path('add_note', views.add_note, name='add_note'),
@@ -34,8 +34,12 @@ urlpatterns = [
     path('my_object/<int:pk>/delete/', views.delete_mo, name='delete_mo'),
     path('delete_note/<int:pk>/', views.delete_note, name='delete_note'),
     path('delete_wd/<int:pk>/', views.delete_wd, name='delete_wd'),
+    path('delete_mco/<int:pk>/', views.delete_mco, name='delete_mco'),
     path('products/', product, name='products'),
     path('export-to-excel/', export_to_excel, name='export_to_excel'),
+    path('export_current_objects_to_excel/', views.export_current_objects_to_excel, name='export_current_objects_to_excel'),
+    path('export_all_objects_to_excel/', views.export_all_objects_to_excel, name='export_all_objects_to_excel'),
+
 
 
 ] + static(settings.DOCUMENTS_URL, document_root=settings.DOCUMENTS_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

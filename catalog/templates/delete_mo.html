@@ -11,11 +11,11 @@
     <title>Delete Object</title>
 </head>
 <body>
-    <h1>Delete Object</h1>
-    <p>Are you sure you want to delete "{{ my_object.name }}"?</p>
+    <h1>Удалить проект?</h1>
+    <p>Вы уверены, что хотите удалить проект{{ my_object.name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Yes, delete</button>
+        <button type="submit">Да, удалить</button>
     </form>
 </body>
 </html>

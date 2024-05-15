@@ -11,12 +11,19 @@
 </head>
 <body>
     <h1>Заметки</h1>
+
+    <a href="{% url 'add_note' %}">Добавить заметку</a>
+
     <ul>
         {% for note in notes %}
-        <li><a href="{% url 'edit_note' note.pk %}">{{ note.title }}</a> (<a href="{% url 'delete_note' note.pk %}">Удалить</a>)</li>
+        <li>
+            <a href="{% url 'edit_note' note.pk %}">{{ note.title }}</a>
+            ({{ note.date|date:"d.m.y" }})
+            <a href="{% url 'delete_note' note.pk %}">Удалить</a>
+        </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'add_note' %}">Добавить заметку</a>
+
 </body>
 </html>
 
