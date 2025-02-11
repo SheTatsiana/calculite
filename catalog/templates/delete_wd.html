@@ -2,6 +2,15 @@
 {% block content %}
 {% load static %}
 
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # Other URL patterns
+    path('delete/<int:pk>
+    /', views.delete_work_detail, name='delete_wd'),
+    ]
 
 
-{% endblock %}
+    {% endblock %}

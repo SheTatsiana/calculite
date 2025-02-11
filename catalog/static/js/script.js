@@ -33,3 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+    function addForm() {
+    var formIdx = $('#id_form-TOTAL_FORMS').val();
+    $('#formset tbody').append($('#empty-form').html().replace(/__prefix__/g, formIdx));
+    $('#id_form-TOTAL_FORMS').val(parseInt(formIdx) + 1);
+}
+
+

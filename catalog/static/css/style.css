@@ -1,53 +1,87 @@
-﻿nav {
+﻿/* Общие стили */
+body {
+    background: linear-gradient(to bottom, rgb(134, 187, 150), rgb(255, 255, 255));
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.content {
+    margin: 20px;
+}
+
+.button {
     background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+
+    .button:hover {
+        background-color: rgb(12, 103, 48);
+    }
+
+
+
+/* Навигационное меню */
+nav {
+    background-color: rgba(0, 0, 0, 0);
     color: #fff;
     display: flex;
     justify-content: space-between;
     padding: 10px;
 }
 
-nav a {
+    nav a {
         color: #fff;
         text-decoration: none;
     }
 
-.content {
-    margin: 20px;
+/* Заголовок */
+h1 {
+    text-align: center;
+    font-size: 48px;
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
 }
 
-body {
-    background-color: #f0f0f0; /* Цвет фона страницы */
-    color: #333; /* Основной цвет текста */
-    font-family: Arial, sans-serif; /* Шрифт */
-}
-
-header {
-    background-color: #000; /* Цвет шапки и подвала */
-    color: #fff; /* Цвет текста в шапке и подвале */
-    padding: 10px; /* Внутренний отступ */
-}
-
-footer {
-    background-color: #000; /* Цвет шапки и подвала */
-    color: #fff; /* Цвет текста в шапке и подвале */
-    padding: 10px; /* Внутренний отступ */
-}
-
+/* Таблицы */
 table {
-    width: 80%; /* Ширина таблицы */
-    margin: 20px auto; /* Центрирование таблицы */
-    border-collapse: collapse; /* Схлопывание границ ячеек */
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
 }
 
 th, td {
-    border: 1px solid #ddd; /* Границы ячеек */
-    padding: 8px; /* Внутренний отступ ячеек */
-    text-align: left; /* Выравнивание текста */
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 }
 
 th {
-    background-color: #f2f2f2; /* Цвет фона заголовков */
+    background-color: #f2f2f2;
 }
+
+/* Кнопки модального окна */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 28px;
+    color: #aaa;
+}
+
+    .close-button:hover {
+        color: #000;
+    }
 
 /* Модальное окно */
 .modal {
@@ -72,17 +106,66 @@ th {
     overflow: auto;
 }
 
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 28px;
-    color: #aaa;
+/* Стили для форм */
+form {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-    .close-button:hover {
-        color: #000;
+    form label {
+        display: block;
+        margin-bottom: 8px;
     }
 
+    form input[type="text"],
+    form input[type="email"],
+    form textarea,
+    form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        line-height: 1.5;
+    }
 
+    form .button {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+        form .button:hover {
+            background-color: #0056b3;
+        }
+
+
+
+
+/* Подвал */
+footer {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+    footer a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+        }

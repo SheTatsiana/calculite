@@ -4,14 +4,30 @@ from .forms import MyCurrentObjectForm
 from django.urls import reverse
 from .forms import ProductForm
 from .forms import MyObjectForm
-from .forms import NoteForm, WorkDetailForm
+from .forms import NoteForm, WorkDetailForm, WorkDetailFormSet, SelectCurrentObjectForm
 
 from django.http import JsonResponse
 from .models import WorkDetail
 from django.views.decorators.csrf import csrf_exempt
 
+from django.forms import modelformset_factory
+from .models import Gallery
+from .forms import GalleryForm
 
-#url = reverse('users:profile_edit')
+def home_view(request):
+       if request.method == 'POST':
+           form = GalleryForm(request.POST, request.FILES)
+           if form.is_valid():
+               form.save()
+               return redirect('home')  # перенаправление на главную страницу после успешной загрузки
+       else:
+           form = GalleryForm()
+
+       galleries = Gallery.objects.all()
+       return render(request, 'home.html', {'galleries': galleries, 'form': form})
+
+
+
 
 def home(request):
     my_current_objects = MyCurrentObject.objects.all()
@@ -22,9 +38,7 @@ def mycurrentobject(request):
     products = Product.objects.all()  # Получаем все продукты
     return render(request, 'mycurrentobject.html', {'my_current_objects': my_current_objects, 'products': products})
 
-#def my_view(request):
-    #current_objects = MyCurrentObject.get_objects()
-    #return render(request, 'mycurrentobject.html', {'current_objects': current_objects})
+
 
 def my_object_view(request):
     objects = MyObject.objects.all()  # Получаем все объекты
@@ -39,13 +53,37 @@ def note(request):
     return render(request, 'note.html', {'notes': notes})
 
 def product(request):
+    query = request.GET.get('q')
     products = Product.objects.all()
-    return render(request, 'product.html', {'products': products})
+    if query:
+        products = products.filter(name__icontains=query)
+    return render(request, 'product.html', {'products': products, 'query': query})
+
 
 def workdetail(request):
-    work_details = WorkDetail.objects.all()
-    return render(request, 'workdetail.html', {'work_details': work_details})
+    my_current_objects = MyCurrentObject.objects.all()
+    grouped_data = []
 
+    for my_current_object in my_current_objects:
+        work_details = WorkDetail.objects.filter(my_current_object=my_current_object)
+        total_sum = sum(detail.total_price for detail in work_details)
+        grouped_data.append({
+            'my_current_object': my_current_object,
+            'work_details': work_details,
+            'total_sum': total_sum,
+        })
+
+    return render(request, 'workdetail.html', {'grouped_data': grouped_data})
+
+def create_work_detail(request):
+    if request.method == 'POST':
+        form = WorkDetailForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('workdetail')  # Redirect to the workdetail view
+    else:
+        form = WorkDetailForm()
+    return render(request, 'add_wd.html', {'form': form})
 
 def add_mco(request): 
     if request.method == 'POST':
@@ -306,3 +344,5 @@ def delete_mco(request, pk):
         my_current_object.delete()  
         return redirect('mycurrentobject')
     return render(request, 'delete_mco.html', {'my_current_object': my_current_object})
+
+

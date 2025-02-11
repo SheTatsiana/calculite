@@ -115,5 +115,22 @@ class WorkDetail(models.Model):
     def __str__(self):
         return f"{self.product.name} - {self.quantity} - {self.total_price}"
 
+ # модель галереи на главную страницу
+
+from django.utils.html import format_html
 
 
+class Gallery(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='gallery_images/')
+
+    def __str__(self):
+        return self.title
+
+    def thumbnail(self):
+        if self.image:
+            return format_html('<img src="{}" style="max-width: 50px; max-height: 50px;" />', self.image.url)
+        return "Нет изображения"
+    thumbnail.short_description = "Фото"

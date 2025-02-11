@@ -1,165 +1,48 @@
 ﻿<!DOCTYPE html>
-
-<!-- шаблон для всех страниц приложения -->
-
-
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    {% load static%}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
-        body {
-            background: linear-gradient(to bottom, rgb(134, 187, 150), rgb(255, 255, 255));  /* Цвет фона страницы */
-            color: #333; /* Основной цвет текста */
-            font-family: Arial, sans-serif; /* Шрифт */
-        }
-
-        header, footer {
-            background-color: #000; /* Цвет шапки и подвала */
-            color: #fff; /* Цвет текста в шапке и подвале */
-            padding: 10px; /* Внутренний отступ */
-
-        }
-
-        nav {
-            position: fixed;
-            width: calc(100% - 20px);
-            top: 0;
-            left: 10px;
-            padding-right: 10px;
-            background-color: #000;
-            z-index: 1000;
-        }
-        
-        .content {
-            margin-top: 50px; /* Замените 50px на высоту вашего меню, если она отличается */
-        }
-
-        table {
-            width: 80%; /* Ширина таблицы */
-            margin: 20px auto; /* Центрирование таблицы */
-            border-collapse: collapse; /* Схлопывание границ ячеек */
-        }
-
-        th, td {
-            border: 1px solid #ddd; /* Границы ячеек */
-            padding: 8px; /* Внутренний отступ ячеек */
-            text-align: left; /* Выравнивание текста */
-        }
-
-        th {
-            background-color: #f2f2f2; /* Цвет фона заголовков */
-        }
-    </style>
 </head>
 <body>
     <nav>
-        <a href="{% url 'home' %}"><span style="font-size: 200%;" margin="top">&#8962;</span></a>
-        <a href="{% url 'mycurrentobject' %}">Текущие проекты</a>
-        <a href="{% url 'my_object' %}">Все проекты</a>
-        <a href="{% url 'product' %}">Каталог</a>
-        <a href="{% url 'note' %}">Заметки</a>
-
-        <a href="{% url 'workdetail' %}">Рабочие детали</a>
-        <a href="{% url 'users:user_profile' %}">Профиль</a>
-        <!---->
+        <a href="{% url 'home' %}" class="button"><span style="font-size: 200%;">&#8962;</span></a>
+        <a href="{% url 'mycurrentobject' %}" class="button">Текущие проекты</a>
+        <a href="{% url 'my_object' %}" class="button">Все проекты</a>
+        <a href="{% url 'product' %}" class="button">Каталог</a>
+        <a href="{% url 'note' %}" class="button">Заметки</a>
+        <a href="{% url 'workdetail' %}" class="button">Рабочие детали</a>
+        <a href="{% url 'users:user_profile' %}" class="button">Профиль</a>
     </nav>
-        <div class="content">
 
-            <div style="display: flex;">
-                <img src="{% static 'media/logo.png' %}" alt="Логотип" width="100" height="100">
-                <p style="margin-left: 10px;"><b>Visatos Platuma / Calculite</br> +370 644 464 63</b></p>
+    <div class="content">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center;">
+                <img src="{% static 'media/logo.png' %}" alt="Логотип" width="100" height="100" style="border-radius: 20px;">
+                <p style="margin-left: 10px;"><b>Visatos Platuma / Calculite</b><br>+370 644 464 63</p>
             </div>
-
+            <form method="GET" action="" class="button">
+                <input type="text" name="q" placeholder="Поиск..." value="{{ query }}">
+                <button type="submit" class="button">Искать</button>
+            </form>
         </div>
+    </div>
 
-        <div class="content">
-            {% block content %}{% endblock %}
-        </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
 
-        <footer>
-            <p>Следите за нами в соцсетях:</p>
-            <a href="https://www.facebook.com/visatosplatumapro">Facebook</a>
-            <a href="https://www.linkedin.com/company/visatosplatuma/">LinkedIN</a>
-            <a href="#">Instagram</a>
-        </footer>
+    <footer>
+        <p>Следите за нами в соцсетях:</p>
+        <a href="https://www.facebook.com/visatosplatumapro">Facebook</a>
+        <a href="https://www.linkedin.com/company/visatosplatuma/">LinkedIn</a>
+        <a href="https://www.instagram.com/visatosplatuma">Instagram</a>
+    </footer>
 
-        <script src="{% static 'js/script.js' %}"></script>
-
-        <style>
-            /* Кнопка закрытия */
-            .close-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                cursor: pointer;
-                font-size: 28px;
-                color: #aaa;
-            }
-
-                .close-button:hover {
-                    color: #000;
-                }
-
-            /* Модальное окно */
-            .modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.7);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            }
-
-            .modal-content {
-                position: relative;
-                background-color: #fff;
-                padding: 20px;
-                max-width: 90%;
-                max-height: 90%;
-                overflow: auto;
-            }
-        </style>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const thumbnails = document.querySelectorAll('.thumbnail');
-
-                thumbnails.forEach(thumbnail => {
-                    thumbnail.addEventListener('click', function () {
-                        const imageUrl = this.getAttribute('src');
-                        const modalContent = `
-                            <div class="modal-content">
-                                <span class="close-button">&times;</span>
-                                <img src="${imageUrl}" style="max-width: 100%; max-height: 100vh;">
-                            </div>
-                        `;
-
-                        showModal('Image Preview', modalContent);
-                    });
-                });
-
-                function showModal(title, content) {
-                    const modal = document.createElement('div');
-                    modal.classList.add('modal');
-
-                    modal.innerHTML = content;
-                    document.body.appendChild(modal);
-
-                    const closeButton = modal.querySelector('.close-button');
-                    closeButton.addEventListener('click', function () {
-                        modal.remove();
-                    });
-                }
-            });
-        </script>
-
-
-    </body>
-
-    </html>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

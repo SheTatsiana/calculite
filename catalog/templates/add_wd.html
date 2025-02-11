@@ -1,8 +1,24 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block content %}
 {% load static %}
 
-
+<!-- templates/add_wd.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Work Detail</title>
+</head>
+<body>
+    <h1>Add Work Detail</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'workdetail' %}">Back to Work Details</a>
+</body>
+</html>
 
 
 {% endblock %}

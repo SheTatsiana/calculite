@@ -2,6 +2,7 @@
 {% block content %}
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,23 +11,30 @@
     <title>Home</title>
 </head>
 <body>
-    <h1></h1>
-    <ul>
-        <li>
-            <a href="{% url 'mycurrentobject' %}"><strong>Текущие проекты:</strong></a>
-            <ul>
-                {% for my_current_object in my_current_objects %}
-                <li>
-                    <a href="{% url 'edit_mo' my_current_object.my_object.pk %}">{{ my_current_object.my_object.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </li>
-        <li><a href="{% url 'my_object' %}">Все проекты</a></li>
-        <li><a href="{% url 'note' %}">Заметки</a></li>
-        <li><a href="{% url 'product' %}">Каталог</a></li>
-        
-    </ul>
+    <h1>Наши работы</h1>
+
+
+    <!-- Форма для загрузки фотографий -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Загрузить фотографию</button>
+    </form>
+
+    <!-- Отображение галереи -->
+    <div class="gallery">
+        {% for gallery in galleries %}
+        <div class="gallery-item">
+            <h2>{{ gallery.title }}</h2>
+            {% if gallery.description %}
+            <p>{{ gallery.description }}</p>
+            {% endif %}
+            <img src="{{ gallery.image.url }}" alt="{{ gallery.title }}">
+        </div>
+        {% endfor %}
+    </div>
+
+
 </body>
 </html>
 

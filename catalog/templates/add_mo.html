@@ -15,7 +15,7 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="id_address">Адрес:</label>
-        <input type="text" name="address" id="id_address" required>
+        <input type="text" name="address" id="id_address" value="Вильнюс" required>
         <br><br>
         <label for="id_start_date">Начало проекта:</label>
         <input type="date" name="start_date" id="id_start_date" required>
@@ -27,7 +27,7 @@
         <input type="text" name="customer_name" id="id_customer_name" required>
         <br><br>
         <label for="id_executor_name">Исполнитель:</label>
-        <input type="text" name="executor_name" id="id_executor_name" required>
+        <input type="text" name="executor_name" id="id_executor_name" value="Валерий" required>
         <br><br>
         <label for="id_documents">Документы:</label>
         <input type="file" name="documents" id="id_documents" required>

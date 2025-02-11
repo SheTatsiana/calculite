@@ -2,6 +2,47 @@
 {% block content %}
 {% load static %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Work Details</title>
+</head>
+<body>
+    <h1>Рабочие детали</h1>
 
+    <a href="{% url 'create_work_detail' %}"" class="button">Добавить рабочую деталь</a>
+
+    {% for group in grouped_data %}
+    <h2>{{ group.my_current_object.my_object.name }} ({{ group.my_current_object.my_object.address }})</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Наименование работ</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in group.work_details %}
+            <tr>
+                <td>{{ detail.product.name }}</td>
+                <td>{{ detail.quantity }}</td>
+                <td>{{ detail.unit_price }}</td>
+                <td>{{ detail.total_price }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" style="text-align: right;"><strong>Всего сумма :</strong></td>
+                <td><strong>{{ group.total_sum }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+
+
+</body>
+</html>
 
 {% endblock %}

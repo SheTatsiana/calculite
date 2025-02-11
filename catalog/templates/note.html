@@ -8,21 +8,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notes</title>
+    
 </head>
 <body>
     <h1>Заметки</h1>
 
-    <a href="{% url 'add_note' %}">Добавить заметку</a>
+    <a href="{% url 'add_note' %}" class="button">Добавить заметку</a>
 
-    <ul>
-        {% for note in notes %}
-        <li>
-            <a href="{% url 'edit_note' note.pk %}">{{ note.title }}</a>
-            ({{ note.date|date:"d.m.y" }})
-            <a href="{% url 'delete_note' note.pk %}">Удалить</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Заголовок</th>
+                <th>Дата</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in notes %}
+            <tr>
+                <td><a href="{% url 'edit_note' note.pk %}">{{ note.title }}</a></td>
+                <td>{{ note.date|date:"d.m.y" }}</td>
+                <td><a href="{% url 'delete_note' note.pk %}">Удалить</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </body>
 </html>

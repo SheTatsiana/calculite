@@ -3,11 +3,10 @@ from .models import Note, Product, MyObject, MyCurrentObject, WorkDetail
 from django.utils.html import format_html
 
 
-# Определение инлайн-классов
 
 class WorkDetailInline(admin.TabularInline):
     model = WorkDetail
-    extra = 1  # количество дополнительных форм для добавления
+    extra = 1  
 
 # Регистрируем модели
 
@@ -68,3 +67,8 @@ class MyCurrentObjectAdmin(admin.ModelAdmin):
     end_date.short_description = 'Дата окончания'
 
 
+from .models import Gallery
+
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'thumbnail')  # миниатюра изображения
