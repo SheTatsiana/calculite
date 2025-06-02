@@ -1,13 +1,8 @@
 #Calculite
 
-{% for tag in site.tags %}
-  <h3>{{ tag[0] }}</h3>
-  <ul>
-    {% for post in tag[1] %}
-      <li><a href="{{ [post.url](https://github.com/SheTatsiana/calculite) }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-{% endfor %}
+<ul>
+    <li><a href="{{ [post.url](https://github.com/SheTatsiana/calculite) }}">{{ Calculite }}</a></li>
+</ul>
 
 Calculite — это веб-приложение для ведения строительных объектов, разработанное специально для внутреннего использования в строительной фирме, занимающейся установкой натяжных потолков.
 
