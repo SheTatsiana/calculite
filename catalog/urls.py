@@ -5,9 +5,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-# Импортируем все необходимые представления
+# Импортируем все необходимые представления 
+
 from .views import (
-    home,
+    home_view,
     mycurrentobject,
     my_object,
     note,
@@ -36,14 +37,13 @@ from .views import (
 
 urlpatterns = [
 
-     #path('admin/', admin.site.urls),
-    path('', home, name='home'),
-    path('home', home, name='home'),
-    path('mycurrentobject/', mycurrentobject, name='mycurrentobject'),
-    path('my_object', my_object, name='my_object'),
-    path('note', note, name='note'),
-    path('product', product, name='product'),
-    path('', views.home_view, name='home'),
+    path('admin/', admin.site.urls),
+    path('', views.home_view, name='home'),  # главная с галереей и формой
+    path('home/', views.home_view),          # дополнительный путь (необязательно)
+    path('mycurrentobject/', views.mycurrentobject, name='mycurrentobject'),
+    path('my_object/', views.my_object, name='my_object'),
+    path('note/', views.note, name='note'),
+    path('product/', views.product, name='product'),
     
     # Маршруты для работы с рабочими деталями
     path('workdetail', workdetail, name='workdetail'),

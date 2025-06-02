@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\calculite",
-    "\\catalog"
+    "\\catalog",
+    "\\catalog\\templates"
   ],
-  "SelectedNode": "\\catalog\\admin.py",
+  "SelectedNode": "\\catalog\\views.py",
   "PreviewInSolutionExplorer": false
 }

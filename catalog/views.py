@@ -15,23 +15,24 @@ from .models import Gallery
 from .forms import GalleryForm
 
 def home_view(request):
-       if request.method == 'POST':
-           form = GalleryForm(request.POST, request.FILES)
-           if form.is_valid():
-               form.save()
-               return redirect('home')  # перенаправление на главную страницу после успешной загрузки
-       else:
-           form = GalleryForm()
+    # Обработка формы загрузки
+    if request.method == 'POST':
+        form = GalleryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # после загрузки — обновляем страницу
+    else:
+        form = GalleryForm()
 
-       galleries = Gallery.objects.all()
-       return render(request, 'home.html', {'galleries': galleries, 'form': form})
-
-
-
-
-def home(request):
+    # Получаем галерею и текущие объекты (если нужно)
+    galleries = Gallery.objects.all()
     my_current_objects = MyCurrentObject.objects.all()
-    return render(request, 'home.html', {'my_current_objects': my_current_objects})
+
+    return render(request, 'home.html', {
+        'form': form,
+        'galleries': galleries,
+        'my_current_objects': my_current_objects
+    })
 
 def mycurrentobject(request):
     my_current_objects = MyCurrentObject.objects.all()

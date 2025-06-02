@@ -11,6 +11,8 @@ class MyCurrentObjectForm(forms.ModelForm):
         model = MyCurrentObject
         fields = ['my_object']
 
+
+
 class MyObjectForm(forms.ModelForm):
     products = forms.ModelMultipleChoiceField(queryset=Product.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
 
@@ -35,6 +37,8 @@ class MyObjectForm(forms.ModelForm):
             instance.save()
             self.save_m2m()  # сохраняем связанные продукты
         return instance
+
+
 
 class NoteForm(forms.ModelForm):
     class Meta:
@@ -78,6 +82,7 @@ class SelectCurrentObjectForm(forms.Form):
     my_current_object = forms.ModelChoiceField(queryset=MyCurrentObject.objects.all(), label='Выберите текущий объект')
 
 WorkDetailFormSet = modelformset_factory(WorkDetail, form=WorkDetailForm, extra=3)
+
 
 
 from .models import Gallery
